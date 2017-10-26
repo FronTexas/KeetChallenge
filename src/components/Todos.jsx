@@ -9,8 +9,8 @@ import {
 
 import Todo from './Todo';
 import AddTodoButton from './AddTodoButton';
-import ToggleAllButton from './ToggleAllButton';
 import ClearCompletedButton from './ClearCompletedButton';
+import ToggleAllButton from './ToggleAllButton';
 
 
 const queryTodos = gql`{
@@ -65,9 +65,9 @@ class Todos extends Component {
           <TableCardHeader
             title="To-do list"
           >
-            <AddTodoButton onAddTodoClick={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
-            <ToggleAllButton onToggleAllClick={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
-            <ClearCompletedButton onClearCompletedClick={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
+            <AddTodoButton OnClickHandler={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
+            <ToggleAllButton OnClickHandler={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
+            <ClearCompletedButton OnClickHandler={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
           </TableCardHeader>
           <TableBody>
             {
