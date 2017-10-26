@@ -31,7 +31,7 @@ mutation deleteTodo($id:String!){
   }
 }`;
 
-const MUTATE_TIMEOUT_INTERVAL = 500;
+const MUTATE_TIMEOUT_INTERVAL = 300;
 class Todo extends Component {
   constructor(props) {
     super(props);

@@ -9,6 +9,7 @@ import {
 
 import Todo from './Todo';
 import AddTodoButton from './AddTodoButton';
+import ToggleAllButton from './ToggleAllButton';
 
 const queryTodos = gql`{
   todos{
@@ -19,12 +20,21 @@ const queryTodos = gql`{
 }`;
 
 class Todos extends Component {
-  onRemoveClick() {
-    this.props = this.props;
+  constructor(props) {
+    super(props);
+    this.handleToggleAllClick = this.handleToggleAllClick.bind(this);
+    this.state = {
+      toggleAllState: true,
+    };
+  }
+
+  handleToggleAllClick(mutation) {
+    mutation({ variables: { checked: this.state.toggleAllState } });
+    this.setState({ toggleAllState: !this.state.toggleAllState });
   }
 
   render() {
-    const { data: { loading, error, refetch, todos } } = this.props;      
+    const { data: { loading, error, refetch, todos } } = this.props;
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
     return (
@@ -34,6 +44,7 @@ class Todos extends Component {
             title="To-do list"
           >
             <AddTodoButton refetch={refetch} iconChildren="add">Add</AddTodoButton>
+            <ToggleAllButton toggleAllState={false} onToggleAllClick={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
           </TableCardHeader>
           <TableBody>
             {
