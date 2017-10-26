@@ -24,10 +24,21 @@ const queryTodos = gql`{
 class Todos extends Component {
   constructor(props) {
     super(props);
+    this.handleAddTodoClick = this.handleAddTodoClick.bind(this);
     this.handleToggleAllClick = this.handleToggleAllClick.bind(this);
+    this.handleClearCompletedClick = this.handleClearCompletedClick.bind(this);
     this.state = {
       toggleAllState: true,
     };
+  }
+
+  handleAddTodoClick(mutation, refetch) { 
+    mutation({ variables: { title: '' } })
+      .then((res) => {
+        if (res.data.add) {
+          refetch();
+        }
+      });
   }
 
   handleToggleAllClick(mutation) {
@@ -54,8 +65,8 @@ class Todos extends Component {
           <TableCardHeader
             title="To-do list"
           >
-            <AddTodoButton refetch={refetch} iconChildren="add">Add</AddTodoButton>
-            <ToggleAllButton toggleAllState={false} onToggleAllClick={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
+            <AddTodoButton onAddTodoClick={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
+            <ToggleAllButton onToggleAllClick={this.handleToggleAllClick}  toggleAllState={false} iconChildren="done">Toggle All</ToggleAllButton>
             <ClearCompletedButton onClearCompletedClick={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
           </TableCardHeader>
           <TableBody>

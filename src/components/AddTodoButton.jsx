@@ -12,30 +12,15 @@ const addTodoMutation = gql`
 }`;
 
 class AddTodoButton extends Component {
-  constructor(props) {
-    super(props);
-    this.onAddClick = this.onAddClick.bind(this);
-  }
-
-  onAddClick() {
-    this.props
-      .mutate({ variables: { title: '' } })
-      .then((res) => {
-        if (res.data.add) {
-          this.props.refetch();
-        }
-      });
-  }
-
   render() {
-    const { mobile, children } = this.props;
+    const { mobile, children, mutate, onAddTodoClick } = this.props;
     return (
       <Button
         icon={mobile}
         flat={!mobile}
         primary
         tooltipLabel={mobile ? children : null}
-        onClick={this.onAddClick.bind(this)}
+        onClick={() => onAddTodoClick(mutate)}
         {...this.props}
       >
         {mobile ? null : children}
@@ -48,7 +33,9 @@ class AddTodoButton extends Component {
 AddTodoButton.propTypes = {
   mobile: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  refetch: PropTypes.func.isRequired
+  refetch: PropTypes.func.isRequired,
+  onAddTodoClick: PropTypes.func.isRequired,
+  mutate: PropTypes.func.isRequired
 };
 
 export default graphql(addTodoMutation)(AddTodoButton);
