@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { gql, graphql } from 'react-apollo';
-import PropTypes from 'prop-types';
 
 import {
   DataTable,
