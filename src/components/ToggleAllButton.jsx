@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { gql, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { Button } from 'react-md';
@@ -11,29 +11,29 @@ mutation toggleAll($checked:Boolean!){
   }
 }`;
 
-class ToggleAllButton extends Component {
-  render() {
-    const { mobile, children, mutate, onToggleAllClick } = this.props;
-    return (
-      <Button
-        icon={mobile}
-        flat={!mobile}
-        primary
-        tooltipLabel={mobile ? children : null}
-        onClick={() => onToggleAllClick(mutate)}
-        {...this.props}
-      >
-        {mobile ? null : children}
-      </Button>
-    );
-  }
-}
-
+const ToggleAllButton = ({ mobile, children, mutate, onToggleAllClick, ...props }) => {
+  return (
+    <Button
+      icon={mobile}
+      flat={!mobile}
+      primary
+      tooltipLabel={mobile ? children : null}
+      onClick={() => onToggleAllClick(mutate)}
+      {...props}
+    >
+      {mobile ? null : children}
+    </Button>
+  );
+};
 
 ToggleAllButton.propTypes = {
   mobile: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onToggleAllClick: PropTypes.func.isRequired,
+  mutate: PropTypes.func.isRequired,
 };
 
+ToggleAllButton.defaultProps = { mobile: false };
+
 export default graphql(toggleAllMutation)(ToggleAllButton);
+

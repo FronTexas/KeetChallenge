@@ -66,7 +66,7 @@ class Todos extends Component {
             title="To-do list"
           >
             <AddTodoButton onAddTodoClick={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
-            <ToggleAllButton onToggleAllClick={this.handleToggleAllClick}  toggleAllState={false} iconChildren="done">Toggle All</ToggleAllButton>
+            <ToggleAllButton onToggleAllClick={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
             <ClearCompletedButton onClearCompletedClick={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
           </TableCardHeader>
           <TableBody>
