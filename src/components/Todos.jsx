@@ -1,36 +1,52 @@
 import React, { Component } from 'react';
-import { gql,graphql } from 'react-apollo';
+import { gql, graphql } from 'react-apollo';
 
-// import Todo from './Todo.jsx';
+import {
+  DataTable,
+  TableBody,
+  TableCardHeader,
+} from 'react-md';
 
-const query = gql`{
+import Todo from './Todo';
+import AddTodoButton from './AddTodoButton';
+
+const queryTodos = gql`{
   todos{
     id
     title
     completed
   }
-}`
+}`;
 
 class Todos extends Component {
+  onRemoveClick() {
+    this.props = this.props;
+  }
+
   render() {
-  	let { data } = this.props;
-  	let { todos } = data;
-
-  	if (data.loading){return <div></div>};
-
-    return(
+    const { data: { loading, error, refetch, todos } } = this.props;      
+    if (loading) { return <p>Loading...</p>; }
+    if (error) { return <p>Error!</p>; }
+    return (
       <div>
-        {
-          todos.map((item,index)=>{
-          	let {id,title,completed} = item;
-          	console.log('id,title,completed',{id,title,completed});
-             // <Todo id={id} title={title} completed={completed}></Todo>
-          })	
-        }
+        <DataTable baseId="todos" fullWidth={false} className="todos">
+          <TableCardHeader
+            title="To-do list"
+          >
+            <AddTodoButton refetch={refetch} iconChildren="add">Add</AddTodoButton>
+          </TableCardHeader>
+          <TableBody>
+            {
+              todos.map((item) => {
+                const { id, title, completed } = item;
+                return <Todo refetch={refetch} key={id} id={id} title={title} completed={completed} />;
+              })
+            }
+          </TableBody>
+        </DataTable>
       </div>
-    )
+    );
   }
 }
 
-Todos = graphql(query)(Todos);
-export default Todos;
+export default graphql(queryTodos)(Todos);
