@@ -27,6 +27,9 @@ class Todos extends Component {
     this.handleAddTodoClick = this.handleAddTodoClick.bind(this);
     this.handleToggleAllClick = this.handleToggleAllClick.bind(this);
     this.handleClearCompletedClick = this.handleClearCompletedClick.bind(this);
+    this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
+    this.handleMutateTitle = this.handleMutateTitle.bind(this);
+    this.handleToggleCompleted = this.handleToggleCompleted.bind(this);
     this.state = {
       toggleAllState: true,
     };
@@ -55,9 +58,29 @@ class Todos extends Component {
       });
   }
 
+  handleDeleteTodo(id, refetch, mutation) {
+    mutation({ variables: { id } })
+      .then((res) => {
+        if (res.data.destroy) {
+          refetch();
+        }
+      });
+  }
+
+  handleToggleCompleted(id, mutation) {
+    mutation({ variables: { id } });
+  }
+
+  handleMutateTitle(id, title, mutation) {
+    const MUTATE_TITLE_TIMEOUT_INTERVAL = 300;
+    if (this.timeOutId) clearTimeout(this.timeOutId);
+    this.timeOutId = setTimeout(() => {
+      mutation({ variables: { id, title } });
+    }, MUTATE_TITLE_TIMEOUT_INTERVAL);
+  }
+
   render() {
     const { data: { loading, error, refetch, todos } } = this.props;
-    
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
 
@@ -72,13 +95,23 @@ class Todos extends Component {
           <TableCardHeader
             visible={false}
             title="Keet Todo"
-          >
-          </TableCardHeader>
+          />
           <TableBody>
             {
               todos.map((item) => {
                 const { id, title, completed } = item;
-                return <Todo refetch={refetch} key={id} id={id} title={title} completed={completed} />;
+                return (
+                  <Todo
+                    refetch={refetch}
+                    key={id}
+                    id={id}
+                    title={title}
+                    completed={completed}
+                    toggleCompleted={this.handleToggleCompleted}
+                    mutateTitle={this.handleMutateTitle}
+                    deleteTodo={this.handleDeleteTodo}
+                  />
+                );
               })
             }
           </TableBody>
