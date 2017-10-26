@@ -88,7 +88,7 @@ class Todo extends Component {
 Todo.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  completed: PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired,
   refetch: PropTypes.func.isRequired,
   mutateTitleMutation: PropTypes.func.isRequired,
   toggleCompletedMutation: PropTypes.func.isRequired,

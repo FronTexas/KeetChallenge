@@ -69,6 +69,7 @@ class Todos extends Component {
         </div>
         <DataTable baseId="todos" fullWidth={false} className="todos">
           <TableCardHeader
+            visible={false}
             title="Keet Todo"
           >
           </TableCardHeader>
