@@ -4,23 +4,23 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-md';
 
 
-const toggleAllMutation = gql`
-mutation toggleAll($checked:Boolean!){
-  toggleAll(checked:$checked){
+const clearCompletedMutation = gql`
+mutation {
+  clearCompleted{
     id,title,completed
   }
 }`;
 
-class ToggleAllButton extends Component {
+class ClearCompletedButton extends Component {
   render() {
-    const { mobile, children, mutate, onToggleAllClick } = this.props;
+    const { mobile, children, mutate, onClearCompletedClick } = this.props;
     return (
       <Button
         icon={mobile}
         flat={!mobile}
         primary
         tooltipLabel={mobile ? children : null}
-        onClick={() => onToggleAllClick(mutate)}
+        onClick={() => onClearCompletedClick(mutate)}
         {...this.props}
       >
         {mobile ? null : children}
@@ -30,10 +30,10 @@ class ToggleAllButton extends Component {
 }
 
 
-ToggleAllButton.propTypes = {
+ClearCompletedButton.propTypes = {
   mobile: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  onToggleAllClick: PropTypes.func.isRequired,
+  onClearCompletedClick: PropTypes.func.isRequired,
 };
 
-export default graphql(toggleAllMutation)(ToggleAllButton);
+export default graphql(clearCompletedMutation)(ClearCompletedButton);

@@ -10,6 +10,8 @@ import {
 import Todo from './Todo';
 import AddTodoButton from './AddTodoButton';
 import ToggleAllButton from './ToggleAllButton';
+import ClearCompletedButton from './ClearCompletedButton';
+
 
 const queryTodos = gql`{
   todos{
@@ -33,6 +35,15 @@ class Todos extends Component {
     this.setState({ toggleAllState: !this.state.toggleAllState });
   }
 
+  handleClearCompletedClick(mutation, refetch) {
+    mutation()
+      .then((res) => {
+        if (res.data.clearCompleted) {
+          refetch();
+        }
+      });
+  }
+
   render() {
     const { data: { loading, error, refetch, todos } } = this.props;
     if (loading) { return <p>Loading...</p>; }
@@ -45,6 +56,7 @@ class Todos extends Component {
           >
             <AddTodoButton refetch={refetch} iconChildren="add">Add</AddTodoButton>
             <ToggleAllButton toggleAllState={false} onToggleAllClick={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
+            <ClearCompletedButton onClearCompletedClick={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
           </TableCardHeader>
           <TableBody>
             {
