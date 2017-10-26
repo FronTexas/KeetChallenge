@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   TableRow,
   EditDialogColumn,
-  Button
+  Button,
 } from 'react-md';
 import { gql, graphql, compose } from 'react-apollo';
 
@@ -10,21 +10,21 @@ import { gql, graphql, compose } from 'react-apollo';
 import PropTypes from 'prop-types';
 
 
-const mutateTitleMutation = gql`
+const mutateTitleMutationString = gql`
 mutation mutateTitle($id: String!,$title: String!){
   save(id: $id, title: $title){
     id,title,completed
   }
 }`;
 
-const toggleCompletedMutation = gql`
+const toggleCompletedMutationString = gql`
 mutation toggleCompleted($id:String!){
   toggle(id:$id){
     id,title,completed
   }
 }`;
 
-const deleteTodoMutation = gql`
+const deleteTodoMutationString = gql`
 mutation deleteTodo($id:String!){
   destroy(id:$id){
     id,title,completed
@@ -88,11 +88,15 @@ Todo.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   completed: PropTypes.string.isRequired,
+  refetch: PropTypes.func.isRequired,
+  mutateTitleMutation: PropTypes.func.isRequired,
+  toggleCompletedMutation: PropTypes.func.isRequired,
+  deleteTodoMutation: PropTypes.func.isRequired,
 };
 
 export default compose(
-  graphql(mutateTitleMutation, { name: 'mutateTitleMutation' }),
-  graphql(toggleCompletedMutation, { name: 'toggleCompletedMutation' }),
-  graphql(deleteTodoMutation, { name: 'deleteTodoMutation' }),
+  graphql(mutateTitleMutationString, { name: 'mutateTitleMutation' }),
+  graphql(toggleCompletedMutationString, { name: 'toggleCompletedMutation' }),
+  graphql(deleteTodoMutationString, { name: 'deleteTodoMutation' }),
 
 )(Todo);
