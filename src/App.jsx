@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
 
-import logo from './logo.svg';
 import './App.css';
+
+import Todos from './components/Todos.jsx';
 
 const networkInterface = createNetworkInterface({
   uri: 'http://localhost:8080',
@@ -18,13 +19,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <div className="App">
-          <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h2>Welcome to React</h2>
-          </div>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+          <Todos></Todos>
         </div>
       </ApolloProvider>
     );
