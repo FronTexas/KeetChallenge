@@ -59,15 +59,18 @@ class Todos extends Component {
     const { data: { loading, error, refetch, todos } } = this.props;
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
+
     return (
       <div>
+        <div>
+          <AddTodoButton OnClickHandler={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
+          <ToggleAllButton OnClickHandler={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
+          <ClearCompletedButton OnClickHandler={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
+        </div>
         <DataTable baseId="todos" fullWidth={false} className="todos">
           <TableCardHeader
-            title="To-do list"
+            title="Keet Todo"
           >
-            <AddTodoButton OnClickHandler={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
-            <ToggleAllButton OnClickHandler={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
-            <ClearCompletedButton OnClickHandler={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
           </TableCardHeader>
           <TableBody>
             {

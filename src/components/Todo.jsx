@@ -70,7 +70,7 @@ class Todo extends Component {
       >
         <EditDialogColumn
           defaultValue={title}
-          placeholder="Add new todo"
+          placeholder="Type here to add new todo list"
           onChange={(updatedTitle) => { this.mutateTitle(id, updatedTitle, mutateTitleMutation); }}
           inline
         />
