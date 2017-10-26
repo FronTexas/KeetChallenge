@@ -9,6 +9,7 @@ import { gql, graphql, compose } from 'react-apollo';
 
 import PropTypes from 'prop-types';
 
+const MUTATE_TITLE_TIMEOUT_INTERVAL = 300;
 
 const mutateTitleMutationString = gql`
 mutation mutateTitle($id: String!,$title: String!){
@@ -31,7 +32,7 @@ mutation deleteTodo($id:String!){
   }
 }`;
 
-const MUTATE_TIMEOUT_INTERVAL = 300;
+
 class Todo extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +45,7 @@ class Todo extends Component {
     if (this.timeOutId) clearTimeout(this.timeOutId);
     this.timeOutId = setTimeout(() => {
       mutation({ variables: { id, title } });
-    }, MUTATE_TIMEOUT_INTERVAL);
+    }, MUTATE_TITLE_TIMEOUT_INTERVAL);
   }
 
   toggleCompleted(id, mutation) {
