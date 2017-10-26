@@ -32,8 +32,8 @@ class Todos extends Component {
     };
   }
 
-  handleAddTodoClick(mutation, refetch) { 
-    mutation({ variables: { title: '' } })
+  handleAddTodoClick(addTodoMutation, refetch) { 
+    addTodoMutation({ variables: { title: '' } })
       .then((res) => {
         if (res.data.add) {
           refetch();
@@ -41,13 +41,13 @@ class Todos extends Component {
       });
   }
 
-  handleToggleAllClick(mutation) {
-    mutation({ variables: { checked: this.state.toggleAllState } });
+  handleToggleAllClick(toggleAllMutation) {
+    toggleAllMutation({ variables: { checked: this.state.toggleAllState } });
     this.setState({ toggleAllState: !this.state.toggleAllState });
   }
 
-  handleClearCompletedClick(mutation, refetch) {
-    mutation()
+  handleClearCompletedClick(clearCompletedMutation, refetch) {
+    clearCompletedMutation()
       .then((res) => {
         if (res.data.clearCompleted) {
           refetch();
@@ -57,6 +57,7 @@ class Todos extends Component {
 
   render() {
     const { data: { loading, error, refetch, todos } } = this.props;
+    
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
 
