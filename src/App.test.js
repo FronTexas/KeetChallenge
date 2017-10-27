@@ -109,11 +109,6 @@ describe('Test for AddTodoButton', () => {
     wrapper.find('TableActionButton').props().onClick();
     expect(addTodo).toHaveBeenCalled();
   });
-
-  it('Calls refetchTodos after calling addTodo', () => {
-    wrapper.find('TableActionButton').props().onClick();
-    expect(refetchTodos).toHaveBeenCalled();
-  });
 });
 
 describe('Test for ClearCompletedButton', () => {
@@ -136,11 +131,6 @@ describe('Test for ClearCompletedButton', () => {
   it('Calls clearCompleted when clicked', () => {
     wrapper.find('TableActionButton').props().onClick();
     expect(clearCompleted).toHaveBeenCalled();
-  });
-
-  it('Calls refetchTodos after calling addTodo', () => {
-    wrapper.find('TableActionButton').props().onClick();
-    expect(refetchTodos).toHaveBeenCalled();
   });
 });
 
