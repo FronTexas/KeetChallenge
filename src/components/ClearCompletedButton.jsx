@@ -5,7 +5,7 @@ import { CLEAR_COMPLETED } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
-class ClearCompletedButton extends Component {
+export class ClearCompletedButton extends Component {
   static propTypes = {
     clearCompleted: PropTypes.func.isRequired,
     refetchTodos: PropTypes.func.isRequired,

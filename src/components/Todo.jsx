@@ -11,7 +11,7 @@ import {
 import { MUTATE_TITLE, TOGGLE_TODO, DELETE_TODO } from '../graph';
 
 const MUTATE_TITLE_INTERVAL = 300;
-class Todo extends Component {
+export class Todo extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -41,7 +41,7 @@ class Todo extends Component {
     const { id, deleteTodo, refetchTodos } = this.props;
     deleteTodo(id)
       .then((res) => {
-        if (res.data.destroy) {
+        if (res && res.data && res.data.destroy) {
           refetchTodos();
         }
       });

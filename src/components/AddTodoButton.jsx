@@ -5,7 +5,7 @@ import { ADD_TODO } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
-class AddTodoButton extends Component {
+export class AddTodoButton extends Component {
   static propTypes = {
     addTodo: PropTypes.func.isRequired,
     refetchTodos: PropTypes.func.isRequired,
@@ -15,7 +15,7 @@ class AddTodoButton extends Component {
     const { addTodo, refetchTodos } = this.props;
     addTodo('')
       .then((res) => {
-        if (res.data.add) {
+        if (res && res.data && res.data.add) {
           refetchTodos();
         }
       });

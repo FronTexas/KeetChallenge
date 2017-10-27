@@ -5,7 +5,7 @@ import { TOGGLE_ALL } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
-class ToggleAllButton extends Component {
+export class ToggleAllButton extends Component {
   static propTypes = {
     toggleAllTodos: PropTypes.func.isRequired,
   }
