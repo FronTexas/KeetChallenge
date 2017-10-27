@@ -5,7 +5,7 @@ import { TOGGLE_ALL } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
-export class ToggleAllButton extends Component {
+export class ToggleAllButtonComponent extends Component {
   static propTypes = {
     toggleAllTodos: PropTypes.func.isRequired,
   }
@@ -34,4 +34,4 @@ export default graphql(TOGGLE_ALL, {
   props: ({ mutate }) => ({
     toggleAllTodos: checked => mutate({ variables: { checked } }),
   }),
-})(ToggleAllButton);
+})(ToggleAllButtonComponent);

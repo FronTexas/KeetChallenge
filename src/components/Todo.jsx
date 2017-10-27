@@ -11,7 +11,7 @@ import {
 import { MUTATE_TITLE, TOGGLE_TODO, DELETE_TODO } from '../graph';
 
 const MUTATE_TITLE_INTERVAL = 300;
-export class Todo extends Component {
+export class TodoComponent extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -94,4 +94,4 @@ export default compose(
   MUTATE_TITLE_WRAPPED,
   TOGGLE_TODO_WRAPPED,
   DELETE_TODO_WRAPPED,
-)(Todo);
+)(TodoComponent);

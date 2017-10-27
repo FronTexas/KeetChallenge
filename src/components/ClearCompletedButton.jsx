@@ -5,7 +5,7 @@ import { CLEAR_COMPLETED } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
-export class ClearCompletedButton extends Component {
+export class ClearCompletedButtonComponent extends Component {
   static propTypes = {
     clearCompleted: PropTypes.func.isRequired,
     refetchTodos: PropTypes.func.isRequired,
@@ -32,5 +32,5 @@ export default graphql(CLEAR_COMPLETED, {
   props: ({ mutate }) => ({
     clearCompleted: () => mutate(),
   }),
-})(ClearCompletedButton);
+})(ClearCompletedButtonComponent);
 
