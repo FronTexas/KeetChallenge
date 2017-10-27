@@ -99,8 +99,7 @@ export class Todos extends Component {
           />
           <TableBody>
             {
-              todos.map((item) => {
-                const { id, title, completed } = item;
+              todos.map(({ id, title, completed } ) => {
                 return (
                   <Todo
                     refetch={refetch}
