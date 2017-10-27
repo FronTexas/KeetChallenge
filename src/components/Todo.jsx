@@ -86,8 +86,7 @@ const TOGGLE_TODO_WRAPPED = graphql(TOGGLE_TODO, {
 
 const DELETE_TODO_WRAPPED = graphql(DELETE_TODO, {
   props: ({ mutate }) => ({
-    deleteTodo: id => mutate({ variables: { id } })
-    ,
+    deleteTodo: id => mutate({ variables: { id } }),
   }),
 });
 
