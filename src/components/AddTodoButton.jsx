@@ -1,5 +1,35 @@
-import TableActionButtonFactory from './TableActionButtonFactory';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { graphql } from 'react-apollo';
 import { ADD_TODO } from '../graph';
 
-const AddTodoButton = TableActionButtonFactory(ADD_TODO);
-export default AddTodoButton;
+import TableActionButton from './TableActionButton';
+
+class AddTodoButton extends Component {
+  static propTypes = {
+    addTodo: PropTypes.func.isRequired,
+    refetchTodos: PropTypes.func.isRequired,
+  }
+
+  handleOnClick = () => {
+    const { addTodo, refetchTodos } = this.props;
+    addTodo('')
+      .then((res) => {
+        if (res.data.add) {
+          refetchTodos();
+        }
+      });
+  }
+
+  render() {
+    return (
+      <TableActionButton onClick={this.handleOnClick} {...this.props} />
+    );
+  }
+}
+
+export default graphql(ADD_TODO, {
+  props: ({ mutate }) => ({
+    addTodo: title => mutate({ variables: { title } }),
+  }),
+})(AddTodoButton);
