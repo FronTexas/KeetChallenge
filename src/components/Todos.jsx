@@ -21,7 +21,7 @@ const queryTodos = gql`{
   }
 }`;
 
-class Todos extends Component {
+export class Todos extends Component {
   constructor(props) {
     super(props);
     this.handleAddTodoClick = this.handleAddTodoClick.bind(this);
@@ -35,7 +35,7 @@ class Todos extends Component {
     };
   }
 
-  handleAddTodoClick(addTodoMutation, refetch) { 
+  handleAddTodoClick(addTodoMutation, refetch) {
     addTodoMutation({ variables: { title: '' } })
       .then((res) => {
         if (res.data.add) {
@@ -81,15 +81,16 @@ class Todos extends Component {
 
   render() {
     const { data: { loading, error, refetch, todos } } = this.props;
+
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
 
     return (
       <div>
         <div>
-          <AddTodoButton OnClickHandler={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
-          <ToggleAllButton OnClickHandler={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
-          <ClearCompletedButton OnClickHandler={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
+          <AddTodoButton id="add-todo-button" className="testing123" OnClickHandler={mutation => this.handleAddTodoClick(mutation, refetch)} iconChildren="add" >Add</AddTodoButton>
+          <ToggleAllButton id="toggle-all-button" OnClickHandler={this.handleToggleAllClick} iconChildren="done">Toggle All</ToggleAllButton>
+          <ClearCompletedButton id="clear-completed-button" OnClickHandler={mutation => this.handleClearCompletedClick(mutation, refetch)} iconChildren="clear">Clear Completed</ClearCompletedButton>
         </div>
         <DataTable baseId="todos" fullWidth={false} className="todos">
           <TableCardHeader
