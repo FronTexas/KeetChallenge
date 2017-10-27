@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql, graphql, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 
 import {
   TableRow,
@@ -8,30 +8,9 @@ import {
   Button,
 } from 'react-md';
 
-
-const MUTATE_TITLE = gql`
-mutation mutateTitle($id: String!,$title: String!){
-  save(id: $id, title: $title){
-    id,title,completed
-  }
-}`;
-
-const TOGGLE_TODO = gql`
-mutation toggleTodo($id:String!){
-  toggle(id:$id){
-    id,title,completed
-  }
-}`;
-
-const DELETE_TODO = gql`
-mutation deleteTodo($id:String!){
-  destroy(id:$id){
-    id,title,completed
-  }
-}`;
+import { MUTATE_TITLE, TOGGLE_TODO, DELETE_TODO } from '../graph';
 
 const MUTATE_TITLE_INTERVAL = 300;
-
 class Todo extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
@@ -111,7 +90,6 @@ const DELETE_TODO_WRAPPED = graphql(DELETE_TODO, {
     ,
   }),
 });
-
 
 export default compose(
   MUTATE_TITLE_WRAPPED,
