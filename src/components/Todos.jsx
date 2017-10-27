@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
 import {
   DataTable,
@@ -12,14 +12,7 @@ import AddTodoButton from './AddTodoButton';
 import ClearCompletedButton from './ClearCompletedButton';
 import ToggleAllButton from './ToggleAllButton';
 
-
-const queryTodos = gql`{
-  todos{
-    id
-    title
-    completed
-  }
-}`;
+import { QUERY_TODOS } from '../graph';
 
 export class Todos extends Component {
   constructor(props) {
@@ -75,17 +68,15 @@ export class Todos extends Component {
           />
           <TableBody>
             {
-              todos.map(({ id, title, completed }) => {
-                return (
-                  <Todo
-                    refetchTodos={refetch}
-                    key={id}
-                    id={id}
-                    title={title}
-                    completed={completed}
-                  />
-                );
-              })
+              todos.map(({ id, title, completed }) => (
+                <Todo
+                  refetchTodos={refetch}
+                  key={id}
+                  id={id}
+                  title={title}
+                  completed={completed}
+                />
+              ))
             }
           </TableBody>
         </DataTable>
@@ -94,4 +85,4 @@ export class Todos extends Component {
   }
 }
 
-export default graphql(queryTodos)(Todos);
+export default graphql(QUERY_TODOS)(Todos);

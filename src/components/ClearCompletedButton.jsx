@@ -1,12 +1,5 @@
-import { gql } from 'react-apollo';
+import TableActionButtonFactory from './TableActionButtonFactory';
+import { CLEAR_COMPLETED } from '../graph';
 
-import TableActionButtonFactory from './TableActionButton';
-
-const ClearCompletedButton = TableActionButtonFactory(gql`
-mutation {
-  clearCompleted{
-    id,title,completed
-  }
-}`);
-
+const ClearCompletedButton = TableActionButtonFactory(CLEAR_COMPLETED);
 export default ClearCompletedButton;

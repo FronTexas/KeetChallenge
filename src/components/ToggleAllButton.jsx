@@ -1,12 +1,5 @@
-import { gql } from 'react-apollo';
+import TableActionButtonFactory from './TableActionButtonFactory';
+import { TOGGLE_ALL } from '../graph';
 
-import TableActionButtonFactory from './TableActionButton';
-
-const ToggleAllButton = TableActionButtonFactory(gql`
-mutation toggleAll($checked:Boolean!){
-  toggleAll(checked:$checked){
-    id,title,completed
-  }
-}`);
-
+const ToggleAllButton = TableActionButtonFactory(TOGGLE_ALL);
 export default ToggleAllButton;

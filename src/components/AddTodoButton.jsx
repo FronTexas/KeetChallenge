@@ -1,12 +1,5 @@
-import { gql } from 'react-apollo';
+import TableActionButtonFactory from './TableActionButtonFactory';
+import { ADD_TODO } from '../graph';
 
-import TableActionButtonFactory from './TableActionButton';
-
-const AddTodoButton = TableActionButtonFactory(gql`
-mutation addTodo($title:String!){
-  add(title:$title){
-    id,title,completed
-  }
-}`);
-
+const AddTodoButton = TableActionButtonFactory(ADD_TODO);
 export default AddTodoButton;
