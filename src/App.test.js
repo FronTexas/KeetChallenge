@@ -1,61 +1,35 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { gql } from 'react-apollo';
 import { Todos } from './components/Todos';
 import App from './App';
-import { Todo } from './components/Todo';
 import TableActionButton from './components/TableActionButton';
-import { AddTodoButton } from './components/AddTodoButton';
-import { ClearCompletedButton } from './components/ClearCompletedButton';
-import { ToggleAllButton } from './components/ToggleAllButton';
+import { TodoComponent } from './components/Todo';
+import { AddTodoButtonComponent } from './components/AddTodoButton';
+import { ClearCompletedButtonComponent } from './components/ClearCompletedButton';
+import { ToggleAllButtonComponent } from './components/ToggleAllButton';
 
 it('shallow renders without crashing', () => {
   const wrapper = shallow(<App />);
   expect(wrapper.length).toEqual(1);
 });
 
-// describe('Test for <Todos/>', () => {
-//   let wrapper;
-//   const mockedFunctions = {
-//     handleAddTodoClick: jest.fn(),
-//     handleToggleAllClick: jest.fn(),
-//     handleClearCompletedClick: jest.fn(),
-//     handleDeleteTodo: jest.fn(),
-//     handleToggleCompleted: jest.fn(),
-//     handleMutateTitle: jest.fn(),
-//   };
+describe('Test for Todos', () => {
+  let wrapper;
 
-//   beforeEach(() => {
-//     const mockedData = {
-//       loading: false,
-//       error: false,
-//       refetch: () => {},
-//       todos: [{ id: '123', title: 'Empty', completed: false }],
-//     };
-//     wrapper = mount(<Todos data={mockedData} />);
-//     wrapper.instance().handleAddTodoClick = mockedFunctions.handleAddTodoClick;
-//     wrapper.instance().handleToggleAllClick = mockedFunctions.handleToggleAllClick;
-//     wrapper.instance().handleClearCompletedClick = mockedFunctions.handleClearCompletedClick;
-//     wrapper.instance().handleDeleteTodo = mockedFunctions.handleDeleteTodo;
-//     wrapper.instance().handleToggleCompleted = mockedFunctions.handleToggleCompleted;
-//     wrapper.instance().handleMutateTitle = mockedFunctions.handleMutateTitle;
-//   });
+  beforeEach(() => {
+    const mockedData = {
+      loading: false,
+      error: false,
+      refetch: () => {},
+      todos: [{ id: '123', title: 'Empty', completed: false }],
+    };
+    wrapper = mount(<Todos data={mockedData} />);
+  });
 
-//   it('Calls AddTodo handler', () => {
-//     wrapper.find('#add-todo-button').props().onClick();
-//     expect(mockedFunctions.handleAddTodoClick).toHaveBeenCalled();
-//   });
-
-//   it('Calls ClearCompleted handler', () => {
-//     wrapper.find('#clear-completed-button').props().onClick();
-//     expect(mockedFunctions.handleClearCompletedClick).toHaveBeenCalled();
-//   });
-
-//   it('Calls MutateTitle handler', () => {
-//     wrapper.find('Todo').props().mutateTitle();
-//     expect(mockedFunctions.handleMutateTitle).not.toHaveBeenCalled();
-//   });
-// });
+  it('Renders without exploding', () => {
+    expect(wrapper.length).toEqual(1);
+  });
+});
 
 describe('Test for Todo', () => {
   let wrapper;
@@ -70,7 +44,7 @@ describe('Test for Todo', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Todo {...minProps} />);
+    wrapper = mount(<TodoComponent {...minProps} />);
   });
 
   it('Renders Todo without exploding', () => {
@@ -128,7 +102,7 @@ describe('Test for AddTodoButton', () => {
     });
     refetchTodos = jest.fn();
     addTodo.mockReturnValueOnce(mockPromise);
-    wrapper = mount(<AddTodoButton addTodo={addTodo} refetchTodos={refetchTodos} />);
+    wrapper = mount(<AddTodoButtonComponent addTodo={addTodo} refetchTodos={refetchTodos} />);
   });
 
   it('Calls addTodo when clicked', () => {
@@ -156,7 +130,7 @@ describe('Test for ClearCompletedButton', () => {
     });
     refetchTodos = jest.fn();
     clearCompleted.mockReturnValueOnce(mockPromise);
-    wrapper = mount(<ClearCompletedButton clearCompleted={clearCompleted} refetchTodos={refetchTodos} />);
+    wrapper = mount(<ClearCompletedButtonComponent clearCompleted={clearCompleted} refetchTodos={refetchTodos} />);
   });
 
   it('Calls clearCompleted when clicked', () => {
@@ -181,7 +155,7 @@ describe('Test for ToggleAllButton', () => {
       resolve();
     });
     toggleAllTodos.mockReturnValueOnce(mockPromise);
-    wrapper = mount(<ToggleAllButton toggleAllTodos={toggleAllTodos} />);
+    wrapper = mount(<ToggleAllButtonComponent toggleAllTodos={toggleAllTodos} />);
   });
 
   it('Calls toggleAllTodos when clicked', () => {
