@@ -1,6 +1,5 @@
 import { gql } from 'react-apollo';
 
-
 export const QUERY_TODOS = gql`{
   todos{
     id
