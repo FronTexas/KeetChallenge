@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-md';
 
-import { MUTATE_TITLE, TOGGLE_TODO, DELETE_TODO } from '../graph';
+import { MUTATE_TITLE, TOGGLE_TODO, DELETE_TODO, QUERY_TODOS } from '../graph';
 
 const MUTATE_TITLE_INTERVAL = 300;
 export class TodoComponent extends Component {
@@ -16,7 +16,6 @@ export class TodoComponent extends Component {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
-    refetchTodos: PropTypes.func.isRequired,
     toggleTodo: PropTypes.func.isRequired,
     mutateTitle: PropTypes.func.isRequired,
     deleteTodo: PropTypes.func.isRequired,
@@ -38,13 +37,8 @@ export class TodoComponent extends Component {
   }
 
   handleDeleteButtonClick = () => {
-    const { id, deleteTodo, refetchTodos } = this.props;
-    deleteTodo(id)
-      .then((res) => {
-        if (res && res.data && res.data.destroy) {
-          refetchTodos();
-        }
-      });
+    const { id, deleteTodo } = this.props;
+    deleteTodo(id);
   }
 
   render() {
@@ -85,8 +79,21 @@ const TOGGLE_TODO_WRAPPED = graphql(TOGGLE_TODO, {
 });
 
 const DELETE_TODO_WRAPPED = graphql(DELETE_TODO, {
-  props: ({ mutate }) => ({
-    deleteTodo: id => mutate({ variables: { id } }),
+  props: ({ ownProps, mutate }) => ({
+    deleteTodo: id => mutate({
+      variables: { id },
+      optimisticResponse: {
+        __typename: 'todo',
+        id,
+        title: ownProps.title,
+        completed: ownProps.completed,
+      },
+      update: (store, { data: { destroy } }) => {
+        const data = store.readQuery({ query: QUERY_TODOS });
+        data.todos = data.todos.filter(todo => todo.id !== destroy.id);
+        store.writeQuery({ query: QUERY_TODOS, data });
+      },
+    }),
   }),
 });
 

@@ -27,7 +27,7 @@ export class Todos extends Component {
   }
 
   render() {
-    const { data: { loading, error, refetch, todos } } = this.props;
+    const { data: { loading, error, todos } } = this.props;
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
 
@@ -47,7 +47,6 @@ export class Todos extends Component {
             {
               todos.map(({ id, title, completed }) => (
                 <Todo
-                  refetchTodos={refetch}
                   key={id}
                   id={id}
                   title={title}
