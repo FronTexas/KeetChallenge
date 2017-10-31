@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import { ADD_TODO } from '../graph';
+import { ADD_TODO, QUERY_TODOS } from '../graph';
 
 import TableActionButton from './TableActionButton';
 
 export class AddTodoButtonComponent extends Component {
   static propTypes = {
     addTodo: PropTypes.func.isRequired,
-    refetchTodos: PropTypes.func.isRequired,
   }
 
   handleOnClick = () => {
-    const { addTodo, refetchTodos } = this.props;
-    addTodo('')
-      .then((res) => {
-        if (res && res.data && res.data.add) {
-          refetchTodos();
-        }
-      });
+    const { addTodo } = this.props;
+    addTodo('');
   }
 
   render() {
@@ -30,6 +24,21 @@ export class AddTodoButtonComponent extends Component {
 
 export default graphql(ADD_TODO, {
   props: ({ mutate }) => ({
-    addTodo: title => mutate({ variables: { title } }),
+    addTodo: title => mutate({
+      variables: { title },
+      optimisticResponse: {
+        add: {
+          __typename: 'todo',
+          id: -1,
+          title,
+          completed: false,
+        },
+      },
+      update: (store, { data: { add } }) => {
+        const data = store.readQuery({ query: QUERY_TODOS });
+        data.todos.push(add);
+        store.writeQuery({ query: QUERY_TODOS, data });
+      },
+    }),
   }),
 })(AddTodoButtonComponent);

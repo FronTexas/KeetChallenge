@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 
 import {
@@ -15,6 +16,9 @@ import ToggleAllButton from './ToggleAllButton';
 import { QUERY_TODOS } from '../graph';
 
 export class Todos extends Component {
+  static propTypes = {
+    data: PropTypes.shape({ foo: { loading: PropTypes.boolean, error: PropTypes.boolean, todos: PropTypes.array } }).isRequired,
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +28,6 @@ export class Todos extends Component {
 
   render() {
     const { data: { loading, error, refetch, todos } } = this.props;
-
     if (loading) { return <p>Loading...</p>; }
     if (error) { return <p>Error!</p>; }
 
