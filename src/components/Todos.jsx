@@ -34,9 +34,9 @@ export class Todos extends Component {
     return (
       <div>
         <div>
-          <AddTodoButton id="add-todo-button" refetchTodos={refetch} iconChildren="add" >Add</AddTodoButton>
+          <AddTodoButton id="add-todo-button" iconChildren="add" >Add</AddTodoButton>
           <ToggleAllButton id="toggle-all-button" iconChildren="done">Toggle All</ToggleAllButton>
-          <ClearCompletedButton id="clear-completed-button" refetchTodos={refetch} iconChildren="clear">Clear Completed</ClearCompletedButton>
+          <ClearCompletedButton id="clear-completed-button" iconChildren="clear">Clear Completed</ClearCompletedButton>
         </div>
         <DataTable baseId="todos" fullWidth={false} className="todos">
           <TableCardHeader
